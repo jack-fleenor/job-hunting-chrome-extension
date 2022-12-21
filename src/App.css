@@ -1,0 +1,14 @@
+#root {
+  max-width: 25rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+  vertical-align: top;
+}
+
+.App {
+  vertical-align: top;
+  display: inline-block;
+  width: 100%;
+}
