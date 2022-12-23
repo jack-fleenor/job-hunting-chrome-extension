@@ -1,6 +1,7 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import LeadsItem from './LeadsItem';
+import icon from "../../assets/icon.png";
 
 const LeadsContainer = () => {
   interface Lead {
@@ -54,6 +55,10 @@ const LeadsContainer = () => {
     }
   }, [ leads ])
 
+  const handleSearch = (search: any) => {
+
+  };
+
   React.useEffect(() => {
     if(chrome.storage != null){
       loadStorage()
@@ -62,12 +67,19 @@ const LeadsContainer = () => {
   
   return (
     <div>
-      <button onClick={() => addLead()}> Add Lead </button>
-      <ul style={{ listStyleType: 'none', padding: 0 }}>
+      <div style={{display: 'flex'}}>
+        <img src={icon} alt="Vite logo" style={{height: '25px'}} />
+        <div style={{marginLeft: '15px'}}>
+          job leads
+        </div>
+      </div>
+      {/* <input onChange={(e) => handleSearch(e.target.value)} className="search" type="text" placeholder="search"/> */}
+      <ul style={{ listStyleType: 'none', padding: 0, height: '250px', overflowY: 'scroll' }}>
         {
           Object.keys(leads).map((lead: any) => <LeadsItem lead={leads[lead]} updateLead={updateLead} deleteLead={deleteLead} />)
         }
       </ul>
+      <button onClick={() => addLead()}> Add Lead </button>
     </div>
   )
 }
