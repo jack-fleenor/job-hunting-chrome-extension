@@ -9,7 +9,6 @@ const LeadsContainer = () => {
     company: string;
     notes: string;
     createdAt: Date;
-    lastEditedAt: Date;
   }
   
   interface Leads { [index: string]: Lead; }
@@ -23,13 +22,11 @@ const LeadsContainer = () => {
       company: 'Lead',
       notes: 'Lorem ipsum',
       createdAt: new Date(),
-      lastEditedAt: new Date()
     }
     setLeads({...leads, [newLead.id]: newLead})
   }
   
   const updateLead = (lead: any) => {
-    leads[lead.id]['lastEditedAt'] = new Date();
     setLeads({...leads, [lead.id]: lead});
   }
 
@@ -42,22 +39,15 @@ const LeadsContainer = () => {
   const loadStorage = async () => {
     const storage = chrome.storage
     storage.sync.get(["leads"]).then((result: any) => {
-        console.log("Value currently is " + result.leads);
         setLeads({...result.leads})
     });
   }
 
   React.useEffect(() => {
     if(Object.keys(leads).length >= 1 && chrome.storage != null){
-      chrome.storage.sync.set({ leads: leads }).then(() => {
-        console.log("Value is set to " + leads);
-      });
+      chrome.storage.sync.set({ leads: leads })
     }
   }, [ leads ])
-
-  const handleSearch = (search: any) => {
-
-  };
 
   React.useEffect(() => {
     if(chrome.storage != null){
@@ -67,19 +57,17 @@ const LeadsContainer = () => {
   
   return (
     <div>
-      <div style={{display: 'flex'}}>
-        <img src={icon} alt="Vite logo" style={{height: '25px'}} />
-        <div style={{marginLeft: '15px'}}>
-          job leads
-        </div>
+      <div style={{marginLeft: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <img src={icon} alt="Vite logo" style={{height: '25px'}} /> 
+        <h3> job leads </h3>
+        <button onClick={() => addLead()}> Add Lead </button>
       </div>
-      {/* <input onChange={(e) => handleSearch(e.target.value)} className="search" type="text" placeholder="search"/> */}
       <ul style={{ listStyleType: 'none', padding: 0, height: '250px', overflowY: 'scroll' }}>
         {
           Object.keys(leads).map((lead: any) => <LeadsItem lead={leads[lead]} updateLead={updateLead} deleteLead={deleteLead} />)
         }
       </ul>
-      <button onClick={() => addLead()}> Add Lead </button>
+      
     </div>
   )
 }
