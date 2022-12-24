@@ -18,9 +18,9 @@ const LeadsContainer = () => {
   const addLead = () => {
     const newLead = {
       id: uuidv4(),
-      name: 'Lead',
-      company: 'Lead',
-      notes: 'Lorem ipsum',
+      name: 'Name',
+      company: 'Company',
+      notes: 'Notes',
       createdAt: new Date(),
     }
     setLeads({...leads, [newLead.id]: newLead})
