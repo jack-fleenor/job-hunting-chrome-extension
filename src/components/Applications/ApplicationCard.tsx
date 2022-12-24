@@ -1,21 +1,21 @@
 import React from 'react'
+import { Application } from './Applications.types';
 import menuOpen from "../../assets/menuOpen.png";
 import menuClose from "../../assets/menuClose.png";
 import save from "../../assets/save.png";
 import remove from "../../assets/remove.png";
 import pencil from "../../assets/pencil.png";
 import IconButton from '../Shared/IconButton';
-import { Lead } from './Leads.types';
 
-const LeadsCard = (props: { lead: Lead, updateLead: Function, deleteLead: Function }) => {
-  const { lead, updateLead, deleteLead } = props;
-  const { name, company, notes } = lead;
+const ApplicationsCard = (props: { application: Application, updateApplication: Function, deleteApplication: Function}) => {
+  const { application, updateApplication, deleteApplication } = props;
+  const { name, company, notes } = application;
   const [ edit, setEdit ] = React.useState<Boolean>(false);
   const [ openMenu, setOpenMenu ] = React.useState<Boolean>(false);
-  const [ editedLead, setEditedLead ] = React.useState<Lead>(lead);
+  const [ editedApplication, setEditedApplication ] = React.useState<Application>(application);
   
   const handleFormChange = (key: string, value: string) => { 
-    setEditedLead({ ...editedLead, [key]: value })
+    setEditedApplication({ ...editedApplication, [key]: value })
   };
 
   const handleMenuButtonClick = () => {
@@ -31,25 +31,25 @@ const LeadsCard = (props: { lead: Lead, updateLead: Function, deleteLead: Functi
 
   const handleSaveButtonClick = () => {
     setOpenMenu(!openMenu);
-    updateLead(editedLead);
+    updateApplication(editedApplication);
     setEdit(!edit);
   }
 
   const handleDeleteButtonClick = () => {
     setOpenMenu(!openMenu);
-    deleteLead(lead.id);
+    deleteApplication(application.id);
     setEdit(!edit);
   }
 
   return (
-    <div className="lead" style={{ display: 'flex', padding: '0.5em' }}>
+    <div className="application" style={{ display: 'flex', padding: '0.5em' }}>
       <div className="container" style={{ width: '90%' }}>
         <div style={{ textAlign: 'left' }}>
           <div> 
             { edit ? <input
               style={{width: '95%'}} 
               type="text" 
-              value={editedLead.name} 
+              value={editedApplication.name} 
               onChange={(e) => handleFormChange('name', e.target.value)} 
             /> : name }
           </div>
@@ -57,7 +57,7 @@ const LeadsCard = (props: { lead: Lead, updateLead: Function, deleteLead: Functi
             { edit ? <input
               style={{width: '95%'}}
               type="text" 
-              value={editedLead.company} 
+              value={editedApplication.company} 
               onChange={(e) => handleFormChange('company', e.target.value)}  
             /> : company }
           </div>
@@ -66,7 +66,7 @@ const LeadsCard = (props: { lead: Lead, updateLead: Function, deleteLead: Functi
               style={{width: '95%'}}
               name="notes" 
               onChange={(e) => handleFormChange('notes', e.target.value)} 
-              value={editedLead.notes} 
+              value={editedApplication.notes} 
               rows={5} 
             /> : notes }
           </div>
@@ -86,4 +86,4 @@ const LeadsCard = (props: { lead: Lead, updateLead: Function, deleteLead: Functi
   )
 }
 
-export default LeadsCard;
+export default ApplicationsCard;

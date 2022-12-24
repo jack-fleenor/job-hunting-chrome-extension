@@ -1,4 +1,4 @@
-const IconButton = (props: any) => {
+const IconButton = (props: { buttonFunction: Function, icon: string, alt: string }) => {
   const { buttonFunction, icon, alt } = props;
 
   const iconButtonStyle = {

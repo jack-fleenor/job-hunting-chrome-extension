@@ -1,18 +1,9 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Lead, Leads } from './Leads.types';
 import LeadsItem from './LeadsItem';
-import icon from "../../assets/icon.png";
 
 const LeadsContainer = () => {
-  interface Lead {
-    name: string;
-    company: string;
-    notes: string;
-    createdAt: Date;
-  }
-  
-  interface Leads { [index: string]: Lead; }
-  
   const [ leads, setLeads ] = React.useState<Leads>({})
   
   const addLead = () => {
@@ -26,11 +17,11 @@ const LeadsContainer = () => {
     setLeads({...leads, [newLead.id]: newLead})
   }
   
-  const updateLead = (lead: any) => {
+  const updateLead = (lead: Lead) => {
     setLeads({...leads, [lead.id]: lead});
   }
 
-  const deleteLead = (id: any) => {
+  const deleteLead = (id: string) => {
     const tempLeads = { ...leads };
     delete tempLeads[id];
     setLeads({...tempLeads});
@@ -57,17 +48,14 @@ const LeadsContainer = () => {
   
   return (
     <div>
-      <div style={{marginLeft: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-        <img src={icon} alt="Vite logo" style={{height: '25px'}} /> 
-        <h3> job leads </h3>
-        <button onClick={() => addLead()}> Add Lead </button>
-      </div>
       <ul style={{ listStyleType: 'none', padding: 0, height: '250px', overflowY: 'scroll' }}>
         {
-          Object.keys(leads).map((lead: any) => <LeadsItem lead={leads[lead]} updateLead={updateLead} deleteLead={deleteLead} />)
+          Object.keys(leads).map((lead: string) => <LeadsItem lead={leads[lead]} updateLead={updateLead} deleteLead={deleteLead} />)
         }
       </ul>
-      
+      <div style={{marginLeft: '15px', display: 'flex', justifyContent: 'right', alignItems: 'center'}}>
+        <button style={{ borderRadius: '50%', backgroundColor: 'white', color: 'black' }} onClick={() => addLead()}>+</button>
+      </div>
     </div>
   )
 }
